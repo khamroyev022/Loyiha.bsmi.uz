@@ -20,20 +20,32 @@ def person_data_views(request):
 
 
 
-def file_uplode_views(request):
-    if request.method == 'POST':
-        print("POST keldi ✅")
-        print("User:", request.user, " | Auth:", request.user.is_authenticated)
-        print("FILES:", request.FILES)
+# def file_uplode_views(request):
+#     if request.method == 'POST':
+#         print("POST keldi ✅")
+#         print("User:", request.user, " | Auth:", request.user.is_authenticated)
+#         print("FILES:", request.FILES)
 
+#         if request.FILES.get('uploade_file'):
+#             uploaded_file = request.FILES['uploade_file']
+#             obj = File.objects.create(
+#                 user=request.user,
+#                 file=uploaded_file
+#             )
+#             print("Saqlangan obyekt:", obj)
+#             return render(request, 'index.html', {"success": True})
+
+#     return render(request, 'index.html', {"success": False})
+
+def file_upload_view(request):
+    if request.method == 'POST':
         if request.FILES.get('uploade_file'):
             uploaded_file = request.FILES['uploade_file']
-            obj = File.objects.create(
+            File.objects.create(
                 user=request.user,
                 file=uploaded_file
             )
-            print("Saqlangan obyekt:", obj)
-            return render(request, 'index.html', {"success": True})
+            # 🔴 POSTdan keyin redirect
+            return redirect('/home/?uploaded=1')
 
-    return render(request, 'index.html', {"success": False})
-
+    return render(request, 'index.html')
