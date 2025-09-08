@@ -15,3 +15,9 @@ def logout_view(request):
     response['Pragma'] = 'no-cache'
     response['Expires'] = '0'
     return response
+
+def message_views(request):
+    return render(request,'message.html')
+
+def person_data_views(request):
+    return render(request,'person_data.html')
