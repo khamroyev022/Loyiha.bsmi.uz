@@ -133,7 +133,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # --- MEDIA FILES ---
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -141,3 +141,6 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+
+SESSION_COOKIE_AGE = 600  
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True

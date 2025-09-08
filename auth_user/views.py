@@ -16,9 +16,9 @@ def login_view(request):
             if user.is_superuser:   # Agar admin bo‘lsa
                 return redirect('/admin/')
             else:                   # Oddiy foydalanuvchi
-                return redirect('/home/')
+                return redirect('home')  # nomi bilan yo'naltiramiz
         else:
-            messages.error(request, 'Invalid username or password.')
+            messages.error(request, 'Username yoki parol noto‘g‘ri!')
             return redirect('login')
 
     return render(request, 'login.html')

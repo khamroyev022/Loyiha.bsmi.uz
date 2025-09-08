@@ -31,28 +31,28 @@
         <div class="row gy-4 justify-content-center justify-content-lg-center align-items-center">
           <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start">
             <h3>Hujjat kiriting</h3>
-            <form action="/upload/" method="post" enctype="multipart/form-data">
-              {% csrf_token %} <!-- Django uchun muhim! -->
-
-              <!-- Fayl yuklash bo'limi -->
-              <div class="upload-section" id="uploadSection">
-                <div class="folder2">
-                  <div class="top3"></div>
-                  <div class="bottom4"></div>
+            <form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="upload-section" id="uploadSection">
+                    <label class="custom-file-upload5">
+                        <input type="file" name="uploade_file" id="fileInput" />
+                        File
+                    </label>
                 </div>
-                <label class="custom-file-upload5">
-                  <input type="file" name="file_upload" id="fileInput" />
-                  File
-                </label>
-              </div>
 
-              <!-- Fayl tanlangandan keyin: Submit + Delete chiqadi -->
-              <div class="action-section" id="actionSection">
-                <div class="filename" id="fileName">fayl.pdf</div>
-                <button type="submit" class="submit-btn">Jo'nat</button>
-                <div class="delete-btn" id="deleteBtn">×</div>
-              </div>
+                <div class="action-section" id="actionSection">
+                    <div class="filename" id="fileName">fayl.pdf</div>
+                    <button type="submit" class="submit-btn">Jo'nat</button>
+                    <div class="delete-btn" id="deleteBtn">×</div>
+                </div>
             </form>
+
+            {% if success %}
+            <script>
+              alert("Fayl muvaffaqiyatli yuklandi!");
+            </script>
+            {% endif %}
+
           </div>
           <div class="col-lg-5 order-1 order-lg-2 hero-img d-flex justify-content-center align-items-center" data-aos="zoom-out">
             <img src="{% static 'assets/img/ChatGPT Image Aug 31, 2025, 01_04_40 PM.png' %}" class="img-fluid animated hero-main-img" alt="" loading="lazy">
