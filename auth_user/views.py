@@ -1,20 +1,24 @@
-from django.shortcuts import render,redirect
-from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.models import User
 from django.contrib import messages
-# Create your views here.
-
 
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        # Authenticate the user (you can use Django's built-in authentication)
         
         user = authenticate(request, username=username, password=password)
-        if user is not None:
+
+        if user is not None:   # Avval user mavjudligini tekshiramiz
             login(request, user)
-            return redirect('home')
+
+            if user.is_superuser:   # Agar admin bo‘lsa
+                return redirect('/admin/')
+            else:                   # Oddiy foydalanuvchi
+                return redirect('/home/')
         else:
-            messages.error(request, 'username yoki parol xato')
+            messages.error(request, 'Invalid username or password.')
+            return redirect('login')
 
     return render(request, 'login.html')

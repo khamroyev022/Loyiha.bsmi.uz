@@ -1,8 +1,13 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Bosh sahifa
+{% endblock %}
+
+{% block extra_css %}{% endblock  %}
 
 {% block content %}
-  
-
   <main class="main">
 
     <!-- Hero Section -->
@@ -23,42 +28,41 @@
           </div>
         </div>
         <div class="row gy-4 justify-content-center justify-content-lg-center align-items-center">
-          <div  class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start">
-            <h3 >Hujjat kiriting</h3>
+          <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start">
+            <h3>Hujjat kiriting</h3>
             <form action="/upload/" method="post" enctype="multipart/form-data">
-                {% csrf_token %} <!-- Django uchun muhim! -->
+              {% csrf_token %} <!-- Django uchun muhim! -->
 
-                <!-- Fayl yuklash bo'limi -->
-                <div class="upload-section" id="uploadSection">
-                  <div class="folder2">
-                    <div class="top3"></div>
-                    <div class="bottom4"></div>
-                  </div>
-                  <label class="custom-file-upload5">
-                    <input type="file" name="file_upload" id="fileInput" />
-                    File
-                  </label>
+              <!-- Fayl yuklash bo'limi -->
+              <div class="upload-section" id="uploadSection">
+                <div class="folder2">
+                  <div class="top3"></div>
+                  <div class="bottom4"></div>
                 </div>
+                <label class="custom-file-upload5">
+                  <input type="file" name="file_upload" id="fileInput" />
+                  File
+                </label>
+              </div>
 
-                <!-- Fayl tanlangandan keyin: Submit + Delete chiqadi -->
-                <div class="action-section" id="actionSection">
-                  <div class="filename" id="fileName">fayl.pdf</div>
-                  <button type="submit" class="submit-btn">Jo'nat</button>
-                  <div class="delete-btn" id="deleteBtn">×</div>
-                </div>
-              </form>
-            <div class="d-flex w-100 justify-content-center justify-content-lg-start" data-aos="fade-up" data-aos-delay="200">
-              <!-- Qo'shimcha kontent -->
-            </div>
+              <!-- Fayl tanlangandan keyin: Submit + Delete chiqadi -->
+              <div class="action-section" id="actionSection">
+                <div class="filename" id="fileName">fayl.pdf</div>
+                <button type="submit" class="submit-btn">Jo'nat</button>
+                <div class="delete-btn" id="deleteBtn">×</div>
+              </div>
+            </form>
           </div>
           <div class="col-lg-5 order-1 order-lg-2 hero-img d-flex justify-content-center align-items-center" data-aos="zoom-out">
-            <img src="assets/img/ChatGPT Image Aug 31, 2025, 01_04_40 PM.png" class="img-fluid animated hero-main-img" alt="" loading="lazy">
+            <img src="{% static 'assets/img/ChatGPT Image Aug 31, 2025, 01_04_40 PM.png' %}" class="img-fluid animated hero-main-img" alt="" loading="lazy">
           </div>
         </div>
       </div>
 
     </section><!-- /Hero Section -->
-     <section id="aplication" class="chefs section">
+
+    <!-- Application Section -->
+    <section id="aplication" class="chefs section">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
@@ -73,11 +77,12 @@
       </div>
       <!-- end arizlarim -->
     </section>
-    <!-- About Section -->
+
+    <!-- News Section -->
     <section id="news" class="about section">
       <div class="container section-title" data-aos="fade-up">
-      <h2><span data-txt="aboutTitle">Yangiliklar</span></h2>
-      <p><span data-txt="aboutSubtitle">So'ngi yangiliklar</span></p>
+        <h2><span data-txt="aboutTitle">Yangiliklar</span></h2>
+        <p><span data-txt="aboutSubtitle">So'ngi yangiliklar</span></p>
       </div>
       <div class="container">
         <div class="swiper about-swiper">
@@ -85,51 +90,11 @@
             <!-- News cards will be rendered here dynamically from backend -->
             <div class="swiper-slide">
               <div class="card news-card h-100 p-2">
-                <img src="assets/img/about.jpg" class="card-img-top" alt="Yangilik 1" loading="lazy">
+                <img src="{% static 'assets/img/about.jpg' %}" class="card-img-top" alt="Yangilik 1" loading="lazy">
                 <div class="card-body p-2">
                   <h6 class="card-title mb-1 card-title-full">Yangilik sarlavhasi 1</h6>
                   <p class="card-text mb-0 card-preview">Lorem ipsum dolor sit amet...</p>
                   <p class="card-text mb-0 card-full">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod, nisi eu consectetur cursus, nisl erat dictum erat, nec dictum erat nisl eu erat.</p>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="card news-card h-100 p-2">
-                <img src="assets/img/about-2.jpg" class="card-img-top" alt="Yangilik 2" loading="lazy">
-                <div class="card-body p-2">
-                  <h6 class="card-title mb-1 card-title-full">Yangilik sarlavhasi 2</h6>
-                  <p class="card-text mb-0 card-preview">Ullamco laboris nisi ut aliquip...</p>
-                  <p class="card-text mb-0 card-full">Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="card news-card h-100 p-2">
-                <img src="assets/img/events-1.jpg" class="card-img-top" alt="Yangilik 3" loading="lazy">
-                <div class="card-body p-2">
-                  <h6 class="card-title mb-1 card-title-full">Yangilik sarlavhasi 3</h6>
-                  <p class="card-text mb-0 card-preview">Excepteur sint occaecat...</p>
-                  <p class="card-text mb-0 card-full">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem.</p>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="card news-card h-100 p-2">
-                <img src="assets/img/events-2.jpg" class="card-img-top" alt="Yangilik 4" loading="lazy">
-                <div class="card-body p-2">
-                  <h6 class="card-title mb-1 card-title-full">Yangilik sarlavhasi 4</h6>
-                  <p class="card-text mb-0 card-preview">Sunt in culpa qui officia...</p>
-                  <p class="card-text mb-0 card-full">Sunt in culpa qui officia deserunt mollit anim id est laborum. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="card news-card h-100 p-2">
-                <img src="assets/img/events-3.jpg" class="card-img-top" alt="Yangilik 5" loading="lazy">
-                <div class="card-body p-2">
-                  <h6 class="card-title mb-1 card-title-full">Yangilik sarlavhasi 5</h6>
-                  <p class="card-text mb-0 card-preview">Quis autem vel eum iure...</p>
-                  <p class="card-text mb-0 card-full">Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
                 </div>
               </div>
             </div>
@@ -140,6 +105,7 @@
         </div>
       </div>
     </section>
+
     <!-- Menu Section -->
     <section id="Selections" class="menu section">
       <div class="container">
@@ -159,39 +125,9 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-            <div class="card h-100 shadow-sm">
-              <img src="assets/img/menu/menu-item-2.png" class="card-img-top" alt="Tanlov rasmi" loading="lazy">
-              <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Tanlov nomi 2</h5>
-                <p class="card-text">Qisqacha izoh yoki tavsif.</p>
-                <a href="#" class="btn btn-primary mt-auto" data-txt="cardMore">Batafsil</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-            <div class="card h-100 shadow-sm">
-              <img src="assets/img/menu/menu-item-3.png" class="card-img-top" alt="Tanlov rasmi" loading="lazy">
-              <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Tanlov nomi 3</h5>
-                <p class="card-text">Qisqacha izoh yoki tavsif.</p>
-                <a href="#" class="btn btn-primary mt-auto">Batafsil</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-            <div class="card h-100 shadow-sm">
-              <img src="assets/img/menu/menu-item-4.png" class="card-img-top" alt="Tanlov rasmi" loading="lazy">
-              <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Tanlov nomi 4</h5>
-                <p class="card-text">Qisqacha izoh yoki tavsif.</p>
-                <a href="#" class="btn btn-primary mt-auto">Batafsil</a>
-              </div>
-            </div>
-          </div>
         </div>
-      </section>
+      </div>
+    </section><!-- /Menu Section -->
+  </main>
 
-
-   {% endblock %}
-
+{% endblock  %}

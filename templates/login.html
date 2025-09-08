@@ -10,7 +10,7 @@ Login
 {% block content %}
   <div class="login-container">
     <h3 class="text-center mb-4">Login</h3>
-    <form>
+    <form method="post" action="{% url 'login' %}"  >
       {% csrf_token %} 
       <input type="text"  name='username' class="form-control" placeholder="ID" required>
       <input type="password" name='password' class="form-control" placeholder="Password" required>
