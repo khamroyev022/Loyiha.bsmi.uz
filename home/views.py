@@ -1,11 +1,13 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from .models import File
+from .models import File,Profile
 # Create your views here.
 @login_required(login_url='/login/')  # faqat login bo‘lgan foydalanuvchi kira oladi
 def home_view(request):
-    return render(request, 'index.html')
+    post_image = Profile.objects.get(user=request.user)
+    context = {'post_image': post_image}
+    return render(request, 'index.html',context)
 
 
 def log_out(request):
@@ -14,28 +16,22 @@ def log_out(request):
 def message_views(request):
     return render(request,'message.html')
 
+
+@login_required(login_url='/login/')
 def person_data_views(request):
-    return render(request,'person_data.html')
+    person_data = Profile.objects.get(user=request.user)
+    context = {
+        'person_data': person_data,
+        'user': request.user
+        
+        }
+    return render(request,'person_data.html',context)
 
 
 
 
-# def file_uplode_views(request):
-#     if request.method == 'POST':
-#         print("POST keldi ✅")
-#         print("User:", request.user, " | Auth:", request.user.is_authenticated)
-#         print("FILES:", request.FILES)
 
-#         if request.FILES.get('uploade_file'):
-#             uploaded_file = request.FILES['uploade_file']
-#             obj = File.objects.create(
-#                 user=request.user,
-#                 file=uploaded_file
-#             )
-#             print("Saqlangan obyekt:", obj)
-#             return render(request, 'index.html', {"success": True})
 
-#     return render(request, 'index.html', {"success": False})
 
 def file_upload_view(request):
     if request.method == 'POST':
@@ -45,7 +41,6 @@ def file_upload_view(request):
                 user=request.user,
                 file=uploaded_file
             )
-            # 🔴 POSTdan keyin redirect
             return redirect('/home/?uploaded=1')
 
     return render(request, 'index.html')

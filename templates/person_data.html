@@ -13,26 +13,26 @@ Ma'lumotlarim
 
   <div class="profile-container">
     <div class="profile-header">
-      <img src="assets/img/profile.jpg" alt="Profil" class="profile-avatar">
+      <img src="{{ person_data.image.url }}" alt="Profil" class="profile-avatar">
       <div class="profile-info">
-        <h4>Ism Familiya</h4>
-        <div class="email"><i class="bi bi-envelope"></i> user@email.com</div>
+        <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+       
         <span class="badge bg-success">Faol</span>
       </div>
     </div>
     <dl class="profile-details row">
       <dt class="col-sm-4">Telefon</dt>
-      <dd class="col-sm-8">+998 90 123 45 67</dd>
+      <dd class="col-sm-8">{{person_data.phone}}</dd>
       <dt class="col-sm-4">Tug'ilgan sana</dt>
-      <dd class="col-sm-8">2000-01-01</dd>
+      <dd class="col-sm-8">{{person_data.birth_date}}</dd>
       <dt class="col-sm-4">O'qish</dt>
-      <dd class="col-sm-8">Toshkent Axborot Texnologiyalari Universiteti, 3-kurs</dd>
+      <dd class="col-sm-8">{{person_data.study}}</dd>
       <dt class="col-sm-4">Manzil</dt>
-      <dd class="col-sm-8">Toshkent, Yunusobod tumani</dd>
+      <dd class="col-sm-8">{{person_data.address}}</dd>
       <dt class="col-sm-4">Passport</dt>
-      <dd class="col-sm-8">AB1234567</dd>
+      <dd class="col-sm-8">{{person_data.passport}}</dd>
       <dt class="col-sm-4">Jins</dt>
-      <dd class="col-sm-8">Erkak</dd>
+      <dd class="col-sm-8">{{person_data.gender}}</dd>
     </dl>
   </div>
 {% endblock %}
