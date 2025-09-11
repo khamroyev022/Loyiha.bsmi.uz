@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home',
     'auth_user',
+    'admin_dashboard',
 ]
 
 MIDDLEWARE = [
@@ -142,5 +143,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-SESSION_COOKIE_AGE = 600  
+SESSION_COOKIE_AGE = 6000 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True

@@ -21,10 +21,9 @@ from django.conf.urls.static import static
 from django.shortcuts import redirect
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('login/',include('auth_user.urls')),
     path('home/',include('home.urls')),
-
+    path('admin/',include('admin_dashboard.urls')),
     path('', lambda request: redirect('login', permanent=False)),
 ]
 

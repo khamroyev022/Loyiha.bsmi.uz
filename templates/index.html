@@ -7,7 +7,7 @@
 
 {% block extra_css %}{% endblock  %}
 {% block extra_css2 %}{% endblock  %}
-
+{% block extra_css_admin %}{% endblock %}
 {% block content %}
   <main class="main">
 
@@ -49,7 +49,7 @@
 
             {% if  request.GET.uploaded %}
             <script>
-              alert("Fayl muvaffaqiyatli yuklandi!");
+              alert("Fayl muvaffaqiyatli yuborildi!");
             </script>
             {% endif %}
 
@@ -88,16 +88,19 @@
       <div class="container">
         <div class="swiper about-swiper">
           <div class="swiper-wrapper" id="news-cards-wrapper">
-            <!-- News cards will be rendered here dynamically from backend -->
+            
             <div class="swiper-slide">
-              <div class="card news-card h-100 p-2">
-                <img src="{% static 'assets/img/about.jpg' %}" class="card-img-top" alt="Yangilik 1" loading="lazy">
-                <div class="card-body p-2">
-                  <h6 class="card-title mb-1 card-title-full">Yangilik sarlavhasi 1</h6>
-                  <p class="card-text mb-0 card-preview">Lorem ipsum dolor sit amet...</p>
-                  <p class="card-text mb-0 card-full">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod, nisi eu consectetur cursus, nisl erat dictum erat, nec dictum erat nisl eu erat.</p>
+              {% for i in news_list %}
+                <div class="card news-card h-100 p-2">
+                  <img src="{{ i.image.url}}" class="card-img-top" alt="Yangilik 1" loading="lazy">
+                  <div class="card-body p-2">
+                    <h6 class="card-title mb-1 card-title-full">{{ i.title}}</h6>
+                    <p class="card-text mb-0 card-preview">{{ i.subtitle}}</p>
+                    <p class="card-text mb-0 card-full">{{i.description}}</p>
+                  </div>
                 </div>
-              </div>
+              {% endfor %}
+              
             </div>
           </div>
           <div class="swiper-pagination"></div>
@@ -117,14 +120,16 @@
         <div class="row gy-4" id="selections-list">
           <!-- Har qatorda maksimal 4 ta card, 5-chi pastki qatordan chiqadi -->
           <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            {% for post_comp in competition_list %}
             <div class="card h-100 shadow-sm">
               <img src="assets/img/menu/menu-item-1.png" class="card-img-top" alt="Tanlov rasmi" loading="lazy">
               <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Tanlov nomi 1</h5>
-                <p class="card-text">Tanlov haqida qisqacha ma'lumot.</p>
+                <h5 class="card-title">{{ post_comp.title}}</h5>
+                <p class="card-text">{{ post_comp.description}}.</p>
                 <a href="#" class="btn btn-primary mt-auto">Batafsil</a>
               </div>
             </div>
+            {% endfor %}
           </div>
         </div>
       </div>

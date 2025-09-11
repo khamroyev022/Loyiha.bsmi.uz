@@ -10,15 +10,13 @@ def login_view(request):
         
         user = authenticate(request, username=username, password=password)
 
-        if user is not None:   # Avval user mavjudligini tekshiramiz
+        if user is not None:   
             login(request, user)
-
-            if user.is_superuser:   # Agar admin bo‘lsa
+            if user.is_superuser:  
                 return redirect('/admin/')
-            else:                   # Oddiy foydalanuvchi
-                return redirect('home')  # nomi bilan yo'naltiramiz
+            else:                   
+                return redirect('home') 
         else:
             messages.error(request, 'Username yoki parol noto‘g‘ri!')
-            return redirect('login')
 
     return render(request, 'login.html')

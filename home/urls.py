@@ -7,4 +7,6 @@ urlpatterns = [
     path('message/',views.message_views,name='message'),
     path('person_data/',views.person_data_views,name='person_data'),
     path('upload/', views.file_upload_view, name='upload'),
+    path('messages/',views.inbox,name='messages'),
+    
 ]

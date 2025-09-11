@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{# Admin sahifa uchun profil.css ni yuklaymiz (base.html da main.css allaqachon yuklangan) #}
+{% block extra_css %}{% endblock %}
+{% block extra_css2 %}{% endblock %}
+{% block header %}{% endblock %}
+
+
+{% block content %}
+<div class="dashboard-container">
+
+    <!-- Hamburger for small screens -->
+    <button id="sidebarToggle" class="sidebar-toggle" aria-label="Toggle sidebar">☰</button>
+
+    <nav class="dashboard-sidebar" id="dashboardSidebar">
+        <div class="sidebar-top">
+            <!-- Replace src with server-provided avatar URL from DB -->
+            <img src="{{post_image.image.url}}" alt="Admin avatar" class="admin-avatar">
+            <div class="admin-name">Administrator</div>
+        </div>
+
+        <ul>
+            <li><a href="#" data-section="statistika">Statistika</a></li>
+            <li><a href="#" data-section="xabarlar">Xabarlar</a></li>
+            <li><a href="#" data-section="yangiliklar">Yangiliklar</a></li>
+            <li><a href="#" data-section="tanlovlar">Tanlovlar</a></li>
+        </ul>
+
+        <div class="sidebar-bottom">
+            <button id="logoutBtnSidebar" class="btn-logout">Logout</button>
+        </div>
+    </nav>
+
+    <main class="dashboard-main">
+        <!-- Content sections: one per sidebar item. JS will toggle the .active class -->
+        <section id="statistika" class="dashboard-overview content-section active">
+            <h2>Statistika</h2>
+            <div class="cards">
+                <div class="card">Foydalanuvchilar: {{total_users}}</div>
+                <div class="card">Faol: {{active_users}}</div>
+                <div class="card">Yangi: {{new_users}}</div>
+            </div>
+            <div class="table-wrapper">
+                <table id="usersTable" class="users-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Ism</th>
+                            <th>HEMIS ID</th>
+                            <th>Fayl(lar)</th>
+                            <th>Ro'yxatga olish</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            {% if user.profile %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ user.get_full_name|default:user.username }}</td>
+                                <td>{{ user.profile.hemis_id|default:"—" }}</td>
+                                <td>
+                                    {% for file in user.file_set.all %}
+                                        <div>
+                                            <a href="{{ file.file.url }}" target="_blank" style="color: red;">
+                                                {{ file.file.url}}
+                                            </a>
+                                            <small>({{ file.uploaded_at|date:"Y-m-d" }})</small>
+                                        </div>
+                                    {% empty %}
+                                        —
+                                    {% endfor %}
+                                </td>
+                                <td>{{ user.date_joined|date:"Y-m-d" }}</td>
+                                <td>
+                                    
+                                </td>
+                            </tr>
+                            {% endif %}
+                        {% empty %}
+                        <tr><td colspan="6" class="text-center">Foydalanuvchilar topilmadi</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="xabarlar" class="dashboard-overview content-section">
+            <h2>Xabarlar</h2>
+            <p>So'nggi xabarlar shu yerda ko'rsatiladi.</p>
+
+            <form method="post" action="" class="model-form">
+                {% csrf_token %}
+                <div class="form-row">
+                    <label>Yuboruvchi (sender)</label>
+                    <input type="text" value="{{ request.user.get_full_name|default:request.user.username }} (siz)" disabled />
+                </div>
+
+                <div class="form-row">
+                    <label for="messageRecipient">Qabul qiluvchi (recipient)</label>
+                    <select id="messageRecipient" name="recipient" required>
+                        <option value="">-- Foydalanuvchi tanlang --</option>
+                        {% for user in users %}
+                            <option value="{{ user.id }}">{{ user.get_full_name|default:user.username }} ({{ user.username }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="messageSubject">Mavzu (subject)</label>
+                    <input id="messageSubject" name="subject" type="text" required maxlength="255" />
+                </div>
+
+                <div class="form-row">
+                    <label for="messageBody">Xabar (body)</label>
+                    <textarea id="messageBody" name="body" rows="6" required></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Yuborish</button>
+                    <button type="reset" class="btn-secondary">Tozalash</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="yangiliklar" class="dashboard-overview content-section">
+            <h2>Yangiliklar</h2>
+            <form method="post" action="" enctype="multipart/form-data" class="model-form">
+                {% csrf_token %}
+                <div class="form-row">
+                    <label for="yangilikTitle">Sarlavha (title)</label>
+                    <input id="yangilikTitle" name="title" type="text" required maxlength="255" />
+                </div>
+
+                <div class="form-row">
+                    <label for="yangilikSubtitle">Kichik sarlavha (subtitle)</label>
+                    <input id="yangilikSubtitle" name="subtitle" type="text" required maxlength="255" />
+                </div>
+
+                <div class="form-row">
+                    <label for="yangilikDesc">Tavsif (description)</label>
+                    <textarea id="yangilikDesc" name="description" rows="6" required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <label for="yangilikImage">Rasm (image)</label>
+                    <input id="yangilikImage" name="image" type="file" accept="image/*" />
+                    <div class="img-preview" id="yangilikPreview" aria-hidden="true"></div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Saqlash</button>
+                    <button type="reset" class="btn-secondary">Tozalash</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="tanlovlar" class="dashboard-overview content-section">
+            <h2>Tanlovlar</h2>
+            <form method="post" action="" enctype="multipart/form-data" class="model-form">
+                {% csrf_token %}
+                <div class="form-row">
+                    <label for="tanlovTitle">Sarlavha (title)</label>
+                    <input id="tanlovTitle" name="title" type="text" required maxlength="255" />
+                </div>
+
+                <div class="form-row">
+                    <label for="tanlovDesc">Tavsif (description)</label>
+                    <textarea id="tanlovDesc" name="description" rows="6" required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <label for="tanlovImage">Rasm (image)</label>
+                    <input id="tanlovImage" name="image" type="file" accept="image/*" />
+                    <div class="img-preview" id="tanlovPreview" aria-hidden="true"></div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Saqlash</button>
+                    <button type="reset" class="btn-secondary">Tozalash</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="logout" class="dashboard-overview content-section">
+            <h2>Logout</h2>
+            <p>Tizimdan chiqish uchun tugmani bosing.</p>
+            <button><a href = '{% url 'logout' %}'  >Logout</a></button>
+        </section>
+    </main>
+</div>
+
+
+   <script src="{% static 'assets/js/main_admin.js' %}"></script>
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock  %}
